@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>N个台阶问题 | 麦克斯韦喵的博客</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="题目描述有一个具有N个台阶的阶梯，一次可以上一阶或是两阶，问有多少中走法。
+题目分析方法1：这道题最简单的解决思路是采用递归的思想，从最后一步开始分析，先不去考虑先前的走法，对于最后一步可能的走法只有两种：走一阶或走两阶。然后分别考虑最后一步走一阶段情况和走两阶的情况。对于走一阶的情况：问题变为前面N-1阶如何走的递归问题；走两阶的情况：问题变为前面N-2阶如何走的递归问题。使用数学描述：假设对于">
+<meta property="og:type" content="article">
+<meta property="og:title" content="N个台阶问题">
+<meta property="og:url" content="http://yoursite.com/2015/05/24/N个台阶问题/index.html">
+<meta property="og:site_name" content="麦克斯韦喵的博客">
+<meta property="og:description" content="题目描述有一个具有N个台阶的阶梯，一次可以上一阶或是两阶，问有多少中走法。
+题目分析方法1：这道题最简单的解决思路是采用递归的思想，从最后一步开始分析，先不去考虑先前的走法，对于最后一步可能的走法只有两种：走一阶或走两阶。然后分别考虑最后一步走一阶段情况和走两阶的情况。对于走一阶的情况：问题变为前面N-1阶如何走的递归问题；走两阶的情况：问题变为前面N-2阶如何走的递归问题。使用数学描述：假设对于">
+<meta property="og:updated_time" content="2015-05-25T08:56:10.077Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="N个台阶问题">
+<meta name="twitter:description" content="题目描述有一个具有N个台阶的阶梯，一次可以上一阶或是两阶，问有多少中走法。
+题目分析方法1：这道题最简单的解决思路是采用递归的思想，从最后一步开始分析，先不去考虑先前的走法，对于最后一步可能的走法只有两种：走一阶或走两阶。然后分别考虑最后一步走一阶段情况和走两阶的情况。对于走一阶的情况：问题变为前面N-1阶如何走的递归问题；走两阶的情况：问题变为前面N-2阶如何走的递归问题。使用数学描述：假设对于">
+  
+    <link rel="alternative" href="/atom.xml" title="麦克斯韦喵的博客" type="application/atom+xml">
+  
+  
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  
+  <link rel="stylesheet" href="/css/style.css" type="text/css">
+  <script src="http://libs.baidu.com/jquery/1.9.0/jquery.js"></script>
+</head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			<img lazy-src="https://github.com/aaronlee44/aaronlee44.github.io/blob/master/img/avatar.jpg?raw=true" class="js-avatar">
+		</a>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/">MaxwellDemon</a></h1>
+		</hgroup>
+
+		
+		<p class="header-subtitle">Hello there！</p>
+		
+
+		
+			<div class="switch-btn">
+				<div class="icon">
+					<div class="icon-ctn">
+						<div class="icon-wrap icon-house" data-idx="0">
+							<div class="birdhouse"></div>
+							<div class="birdhouse_holes"></div>
+						</div>
+						<div class="icon-wrap icon-ribbon hide" data-idx="1">
+							<div class="ribbon"></div>
+						</div>
+						
+						
+						<div class="icon-wrap icon-me hide" data-idx="3">
+							<div class="user"></div>
+							<div class="shoulder"></div>
+						</div>
+						
+					</div>
+					
+				</div>
+				<div class="tips-box hide">
+					<div class="tips-arrow"></div>
+					<ul class="tips-inner">
+						<li>菜单</li>
+						<li>标签</li>
+						
+						
+						<li>关于我</li>
+						
+					</ul>
+				</div>
+			</div>
+		
+
+		<div class="switch-area">
+			<div class="switch-wrap">
+				<section class="switch-part switch-part1">
+					<nav class="header-menu">
+						<ul>
+						
+							<li><a href="/">主页</a></li>
+				        
+							<li><a href="/archives">所有文章</a></li>
+				        
+						</ul>
+					</nav>
+					<nav class="header-nav">
+						<div class="social">
+							
+						</div>
+					</nav>
+				</section>
+				
+				
+				<section class="switch-part switch-part2">
+					<div class="widget tagcloud" id="js-tagcloud">
+						<a href="/tags/算法/" style="font-size: 10px;">算法</a>
+					</div>
+				</section>
+				
+				
+				
+
+				
+				
+				<section class="switch-part switch-part3">
+				
+					<div id="js-aboutme">计算电磁菜鸟一枚，热爱互联网...</div>
+				</section>
+				
+			</div>
+		</div>
+	</header>				
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"></div>
+  		<h1 class="header-author js-mobile-header hide">MaxwellDemon</h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+				<img lazy-src="https://github.com/aaronlee44/aaronlee44.github.io/blob/master/img/avatar.jpg?raw=true" class="js-avatar">
+			</div>
+			<hgroup>
+			  <h1 class="header-author">MaxwellDemon</h1>
+			</hgroup>
+			
+			<p class="header-subtitle">Hello there！</p>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/">主页</a></li>
+		        
+					<li><a href="/archives">所有文章</a></li>
+		        
+		        <div class="clearfix"></div>
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+				</div>
+			</nav>
+		</header>				
+	</div>
+</nav>
+      <div class="body-wrap"><article id="post-N个台阶问题" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2015/05/24/N个台阶问题/" class="article-date">
+  	<time datetime="2015-05-24T13:27:51.000Z" itemprop="datePublished">2015-05-24</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      N个台阶问题
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/算法/">算法</a></li></ul>
+	</div>
+
+        
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/Blog/">Blog</a>
+	</div>
+
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="题目描述">题目描述</h1><p>有一个具有N个台阶的阶梯，一次可以上一阶或是两阶，问有多少中走法。</p>
+<h1 id="题目分析">题目分析</h1><h3 id="方法1：">方法1：</h3><p>这道题最简单的解决思路是采用递归的思想，从最后一步开始分析，先不去考虑先前的走法，对于最后一步可能的走法只有两种：走一阶或走两阶。然后分别考虑最后一步走一阶段情况和走两阶的情况。对于走一阶的情况：问题变为前面N-1阶如何走的递归问题；走两阶的情况：问题变为前面N-2阶如何走的递归问题。<br>使用数学描述：假设对于N阶的台阶有f(N)中走法，则由上面的分析可以得知f(N)=f(N-1)+f(N-2)。得到了一个递归定义的公式，现在只需要考虑递归结束条件即可解决问题。递归计算到f(2)+f(1)时结束，由题意可以得知f(1)=1,f(2)=2。<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">recursionMethod</span><span class="params">(<span class="keyword">int</span> N)</span></span><br><span class="line"></span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(N&lt;=<span class="number">0</span>)</span><br><span class="line">		<span class="built_in">cout</span>&lt;&lt;<span class="string">"N should be bigger than 0"</span>&lt;&lt;endl;</span><br><span class="line">	<span class="keyword">if</span>(N==<span class="number">1</span>)</span><br><span class="line">		<span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">	<span class="keyword">else</span> <span class="keyword">if</span>(N==<span class="number">2</span>)</span><br><span class="line">		<span class="keyword">return</span> <span class="number">2</span>;</span><br><span class="line">	<span class="keyword">else</span></span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">return</span> recursionMethod(N-<span class="number">1</span>)+recursionMethod(N-<span class="number">2</span>);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="方法2：">方法2：</h3><p>该问题还可以采用数学的方法直接解决，假设一次走一阶的共有$x$次，走两阶的共有$y$次，则可以得到$x+2y=N$，我们可以对$x$从0到N进行遍历，将每一个$x$代入前面的等式求出$y=\frac{N-x}{2}$，如果$y$是整数，则保存这一对$(x,y)$。然后考虑对于每一对$(x,y)$它们的排列问题即可求出这一对$(x,y)$的所有走法，然后将所有$(x,y)$组成的走法相加就可以得到总的走法数目。<br>对于某一对$(x,y)$，求其所有排列组合是一个捆绑插空问题，即一次走两步的情况要看做整体（捆绑），所以总共有$x+y=N-2y+y=N-y$个空，即需要从$N-y$个空中选出$x$个插入就可以得到这一对$(x,y)$的所有走法的组合。</p>
+<figure class="highlight nimrod"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line">//计算阶乘</span><br><span class="line">long long factorial_iter(<span class="type">int</span> N)</span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">if</span>(N&lt;<span class="number">0</span>)</span><br><span class="line">		cout&lt;&lt;<span class="string">"N should be bigger than 0"</span>&lt;&lt;endl;</span><br><span class="line">	<span class="keyword">if</span>(N==<span class="number">0</span>)</span><br><span class="line">		<span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">	long long <span class="literal">result</span>=<span class="number">1</span>;</span><br><span class="line">	<span class="keyword">for</span>(long long i=<span class="number">1</span>;i&lt;=N;i++)</span><br><span class="line">		<span class="literal">result</span>*=i;</span><br><span class="line">	<span class="keyword">return</span> <span class="literal">result</span>;</span><br><span class="line">&#125;</span><br><span class="line">//计算组合</span><br><span class="line"><span class="type">int</span>	combination(<span class="type">int</span> N,<span class="type">int</span> M)</span><br><span class="line">&#123;</span><br><span class="line">	long long numerator=factorial_iter(N);</span><br><span class="line">	long long denominator=factorial_iter(M)*factorial_iter(N-M);</span><br><span class="line">	<span class="keyword">return</span> numerator/denominator;</span><br><span class="line">&#125;</span><br><span class="line">//求解总的走法</span><br><span class="line"><span class="type">int</span> mathmaticalWay(<span class="type">int</span> N)</span><br><span class="line">&#123;</span><br><span class="line">	vector&lt;<span class="type">Pair</span>&gt; savePair;</span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> x=<span class="number">0</span>;x&lt;=N;x++)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">if</span>((N-x)%<span class="number">2</span>==<span class="number">0</span>)</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="type">Pair</span> ok;</span><br><span class="line">			ok.x=x;</span><br><span class="line">			ok.y=(N-x)/<span class="number">2</span>;</span><br><span class="line">			savePair.push_back(ok);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="type">int</span> sum=<span class="number">0</span>;</span><br><span class="line">	<span class="keyword">for</span>(<span class="type">auto</span> eachPair:savePair)</span><br><span class="line">	&#123;</span><br><span class="line">		sum+=combination(N-eachPair.y,eachPair.x);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> sum;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    
+  </div>
+  
+    
+  
+</article>
+
+
+<div class="share">
+	<!-- JiaThis Button BEGIN -->
+	<div class="jiathis_style">
+		<span class="jiathis_txt">分享到：</span>
+		<a class="jiathis_button_tsina"></a>
+		<a class="jiathis_button_cqq"></a>
+		<a class="jiathis_button_douban"></a>
+		<a class="jiathis_button_weixin"></a>
+		<a class="jiathis_button_tumblr"></a>
+		<a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+	</div>
+	<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=1405949716054953" charset="utf-8"></script>
+	<!-- JiaThis Button END -->
+</div>
+
+
+
+<div class="duoshuo">
+	<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="2015/05/24/N个台阶问题/" data-title="N个台阶问题" data-url="http://yoursite.com/2015/05/24/N个台阶问题/"></div>
+	<!-- 多说评论框 end -->
+	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"aaronlee"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<!-- 多说公共JS代码 end -->
+</div>
+
+
+
+</div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2015 MaxwellDemon
+    	</div>
+      	<div class="footer-right">
+      		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
+      	</div>
+    </div>
+  </div>
+</footer>
+    </div>
+    
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css" type="text/css">
+  <script src="/fancybox/jquery.fancybox.pack.js" type="text/javascript"></script>
+
+
+<script src="/js/mobile.js" type="text/javascript"></script>
+<script src="/js/main.js" type="text/javascript"></script>
+
+
+
+
+
+<! -- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';                 
+    }       
+});
+</script>
+
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+
+  </div>
+</body>
+</html>
