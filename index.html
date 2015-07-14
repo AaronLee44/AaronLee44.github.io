@@ -98,7 +98,7 @@
 				
 				<section class="switch-part switch-part2">
 					<div class="widget tagcloud" id="js-tagcloud">
-						<a href="/tags/C/" style="font-size: 10px;">C++</a> <a href="/tags/算法/" style="font-size: 20px;">算法</a>
+						<a href="/tags/C/" style="font-size: 15px;">C++</a> <a href="/tags/leetcode/" style="font-size: 10px;">leetcode</a> <a href="/tags/算法/" style="font-size: 20px;">算法</a>
 					</div>
 				</section>
 				
@@ -153,6 +153,118 @@
 	</div>
 </nav>
       <div class="body-wrap">
+  
+    <article id="post-反转一个整数的各个位上的数字" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2015/07/14/反转一个整数的各个位上的数字/" class="article-date">
+  	<time datetime="2015-07-14T13:35:40.000Z" itemprop="datePublished">2015-07-14</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/07/14/反转一个整数的各个位上的数字/">反转一个整数的各个位上的数字</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="题目说明">题目说明</h1><p>这是一道leetcode上的一道算法题，输入一个32位整数，要求反转整数的各个数位，例如输入123，则输出321；输入-123，则输出-321。</p>
+<h1 id="题目分析">题目分析</h1><p>这道题目主要问题在于32位int的溢出，32位int可以表示的范围为$-2^{31}$~$2^{31}-1$，即-2147483648～2147483647。如果输入的整数在反转之后会导致溢出，则返回0。 溢出问题可以通过将反转之后的数存入long long类型中来避免复杂的判断。 </p>
+<h1 id="解决思路">解决思路</h1><h3 id="方法1：">方法1：</h3><p>可以迭代的对输入的数字与10进行取模(%)和除法运算(/)，取模可以得到得到该数个位上的数字，除以10可以将之前的个位去掉，使得十位成为新的个位，然后不断迭代，在该过程中只要注意溢出问题即可。<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> Solution &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">reverse</span><span class="params">(<span class="keyword">int</span> x)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">long</span> <span class="keyword">long</span> res = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">while</span>(x) &#123;</span><br><span class="line">            res = res*<span class="number">10</span> + x%<span class="number">10</span>;</span><br><span class="line">            x /= <span class="number">10</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> (res&lt;INT_MIN || res&gt;INT_MAX) ? <span class="number">0</span> : res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
+<h3 id="方法2：">方法2：</h3><p>利用C++的string流可以专注于对每个数位的操作，而不用在意类型的转换问题。我们可以将要反转的数字存入一个string流对象，然后将string流中的数字输出到一个string变量，对该string变量从末尾输出到另一个string对象就可以完成字符串的反转，最后只需要用string流将反转后的数字转换为int类型并考虑溢出问题即可。<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> Solution &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">reverse</span><span class="params">(<span class="keyword">int</span> x)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> sign=<span class="number">1</span>,ret;</span><br><span class="line">        <span class="keyword">if</span>(x&lt;<span class="number">0</span>)</span><br><span class="line">            sign=-<span class="number">1</span>;</span><br><span class="line">        <span class="built_in">stringstream</span> convert;</span><br><span class="line">        convert&lt;&lt;x;</span><br><span class="line">        <span class="built_in">string</span> temp,store;</span><br><span class="line">        convert&gt;&gt;temp;</span><br><span class="line">        convert.clear();<span class="comment">//reset flags</span></span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=temp.length()-<span class="number">1</span>;i&gt;=<span class="number">0</span>;i--)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span>(sign==-<span class="number">1</span>)</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="keyword">if</span>(i==<span class="number">0</span>)</span><br><span class="line">                    <span class="keyword">break</span>;</span><br><span class="line">                store.push_back(temp[i]);</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span></span><br><span class="line">                store.push_back(temp[i]);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span>(sign==-<span class="number">1</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            convert&lt;&lt;store;</span><br><span class="line">            convert&gt;&gt;ret;</span><br><span class="line">            convert.clear();</span><br><span class="line">            <span class="keyword">if</span>(ret==INT_MAX)</span><br><span class="line">                <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">            store.insert(<span class="number">0</span>,<span class="string">"-"</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        convert&lt;&lt;store;</span><br><span class="line">        convert&gt;&gt;ret;</span><br><span class="line">        <span class="keyword">if</span>(ret==INT_MAX)</span><br><span class="line">            ret=<span class="number">0</span>;</span><br><span class="line">        <span class="keyword">return</span> ret;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
+
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/leetcode/">leetcode</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/算法/">算法</a></li></ul>
+	</div>
+
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+  
+    <article id="post-在字符串中找出连续最长的数字串" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2015/07/14/在字符串中找出连续最长的数字串/" class="article-date">
+  	<time datetime="2015-07-14T13:33:27.000Z" itemprop="datePublished">2015-07-14</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/07/14/在字符串中找出连续最长的数字串/">在字符串中找出连续最长的数字串</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="问题描述">问题描述</h3><blockquote>
+<p>在一个字符串中找出连续最长的数字串，并把这个串的长度返回；如果存在长度相同的连续数字串，返回最后一个连续数字串；如果没有数字，则返回空字符串（“”）而不是NULL！<br>样例输入：<br>abcd12345ed125ss123058789<br>abcd12345ss54761<br>样例输出：<br>输出123058789，函数返回值9<br>输出54761，函数返回值5</p>
+</blockquote>
+<h3 id="问题分析">问题分析</h3><p>题目本身的难度不大，使用指针对输入字符串进行扫描，控制一个startFlag(开始时设为true)来标记数字串是否开始计数，当指针指向的字符为数字并且startFlag为true时开始计数，然后设置startFlag为flase表示数字串计数已经开始，当遇到字母时就将startFlag设置为true以表示数字串计数的终止。</p>
+<h3 id="代码">代码</h3><figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line">unsigned <span class="keyword">int</span> Continumax(<span class="keyword">char</span>** pOutputstr,  <span class="keyword">char</span>* inputstr)</span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">if</span>(strlen(inputstr)==<span class="number">0</span>||inputstr==<span class="keyword">NULL</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		*pOutputstr=<span class="string">""</span>;</span><br><span class="line">		<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">int</span> <span class="keyword">count</span>=<span class="number">0</span>,maxLen=<span class="number">0</span>;</span><br><span class="line">	<span class="keyword">char</span>* begin,*maxStr;<span class="comment">//begin用于指向数字串起始位置</span></span><br><span class="line">	bool startFlag=<span class="keyword">true</span>;<span class="comment">//标记数字串的开始</span></span><br><span class="line">	<span class="keyword">while</span>(*inputstr!=<span class="string">'\0'</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">if</span>((*inputstr&gt;=<span class="string">'0'</span>)&amp;&amp;(*inputstr&lt;=<span class="string">'9'</span>)&amp;&amp;startFlag)<span class="comment">//为数字且flag为true时开始计数</span></span><br><span class="line">		&#123;</span><br><span class="line">			begin=inputstr;</span><br><span class="line">			startFlag=<span class="keyword">false</span>;<span class="comment">//关闭flag，此时指向数字串区域</span></span><br><span class="line">			<span class="keyword">count</span>++;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">else</span> <span class="keyword">if</span>((*inputstr&gt;=<span class="string">'0'</span>)&amp;&amp;(*inputstr&lt;=<span class="string">'9'</span>))</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="keyword">count</span>++;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">else</span></span><br><span class="line">		&#123;</span><br><span class="line">			<span class="keyword">if</span>(<span class="keyword">count</span>&gt;maxLen)</span><br><span class="line">			&#123;</span><br><span class="line">				maxLen=<span class="keyword">count</span>;</span><br><span class="line">				maxStr=begin;</span><br><span class="line">			&#125;</span><br><span class="line">			<span class="keyword">count</span>=<span class="number">0</span>;</span><br><span class="line">			startFlag=<span class="keyword">true</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		inputstr++;</span><br><span class="line">		<span class="keyword">if</span>((*inputstr==<span class="string">'\0'</span>)&amp;&amp;(<span class="keyword">count</span>&gt;maxLen))</span><br><span class="line">		&#123;</span><br><span class="line">			maxLen=<span class="keyword">count</span>;</span><br><span class="line">			maxStr=begin;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">//存储结果</span></span><br><span class="line">	<span class="keyword">char</span>* res=(<span class="keyword">char</span>*)malloc(sizeof(<span class="keyword">char</span>)*(maxLen+<span class="number">1</span>));</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;maxLen;i++)</span><br><span class="line">	&#123;</span><br><span class="line">		res[i]=maxStr[i];</span><br><span class="line">	&#125;</span><br><span class="line">	res[maxLen]=<span class="string">'\0'</span>;</span><br><span class="line">	*pOutputstr=res;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> maxLen;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C/">C++</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/算法/">算法</a></li></ul>
+	</div>
+
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
   
     <article id="post-整数排序" class="article article-type-post" itemscope itemprop="blogPost">
   

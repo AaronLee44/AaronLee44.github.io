@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>在字符串中找出连续最长的数字串 | 麦克斯韦喵的博客</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="问题描述
+在一个字符串中找出连续最长的数字串，并把这个串的长度返回；如果存在长度相同的连续数字串，返回最后一个连续数字串；如果没有数字，则返回空字符串（“”）而不是NULL！样例输入：abcd12345ed125ss123058789abcd12345ss54761样例输出：输出123058789，函数返回值9输出54761，函数返回值5
+
+问题分析题目本身的难度不大，使用指针对输入字符串进行扫描">
+<meta property="og:type" content="article">
+<meta property="og:title" content="在字符串中找出连续最长的数字串">
+<meta property="og:url" content="http://yoursite.com/2015/07/14/在字符串中找出连续最长的数字串/index.html">
+<meta property="og:site_name" content="麦克斯韦喵的博客">
+<meta property="og:description" content="问题描述
+在一个字符串中找出连续最长的数字串，并把这个串的长度返回；如果存在长度相同的连续数字串，返回最后一个连续数字串；如果没有数字，则返回空字符串（“”）而不是NULL！样例输入：abcd12345ed125ss123058789abcd12345ss54761样例输出：输出123058789，函数返回值9输出54761，函数返回值5
+
+问题分析题目本身的难度不大，使用指针对输入字符串进行扫描">
+<meta property="og:updated_time" content="2015-07-14T13:34:03.341Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="在字符串中找出连续最长的数字串">
+<meta name="twitter:description" content="问题描述
+在一个字符串中找出连续最长的数字串，并把这个串的长度返回；如果存在长度相同的连续数字串，返回最后一个连续数字串；如果没有数字，则返回空字符串（“”）而不是NULL！样例输入：abcd12345ed125ss123058789abcd12345ss54761样例输出：输出123058789，函数返回值9输出54761，函数返回值5
+
+问题分析题目本身的难度不大，使用指针对输入字符串进行扫描">
+  
+    <link rel="alternative" href="/atom.xml" title="麦克斯韦喵的博客" type="application/atom+xml">
+  
+  
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  
+  <link rel="stylesheet" href="/css/style.css" type="text/css">
+  <script src="http://libs.baidu.com/jquery/1.9.0/jquery.js"></script>
+</head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			<img lazy-src="https://github.com/aaronlee44/aaronlee44.github.io/blob/master/img/avatar.jpg?raw=true" class="js-avatar">
+		</a>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/">MaxwellDemon</a></h1>
+		</hgroup>
+
+		
+		<p class="header-subtitle">Hello there！</p>
+		
+
+		
+			<div class="switch-btn">
+				<div class="icon">
+					<div class="icon-ctn">
+						<div class="icon-wrap icon-house" data-idx="0">
+							<div class="birdhouse"></div>
+							<div class="birdhouse_holes"></div>
+						</div>
+						<div class="icon-wrap icon-ribbon hide" data-idx="1">
+							<div class="ribbon"></div>
+						</div>
+						
+						
+						<div class="icon-wrap icon-me hide" data-idx="3">
+							<div class="user"></div>
+							<div class="shoulder"></div>
+						</div>
+						
+					</div>
+					
+				</div>
+				<div class="tips-box hide">
+					<div class="tips-arrow"></div>
+					<ul class="tips-inner">
+						<li>菜单</li>
+						<li>标签</li>
+						
+						
+						<li>关于我</li>
+						
+					</ul>
+				</div>
+			</div>
+		
+
+		<div class="switch-area">
+			<div class="switch-wrap">
+				<section class="switch-part switch-part1">
+					<nav class="header-menu">
+						<ul>
+						
+							<li><a href="/">主页</a></li>
+				        
+							<li><a href="/archives">所有文章</a></li>
+				        
+						</ul>
+					</nav>
+					<nav class="header-nav">
+						<div class="social">
+							
+						</div>
+					</nav>
+				</section>
+				
+				
+				<section class="switch-part switch-part2">
+					<div class="widget tagcloud" id="js-tagcloud">
+						<a href="/tags/C/" style="font-size: 15px;">C++</a> <a href="/tags/leetcode/" style="font-size: 10px;">leetcode</a> <a href="/tags/算法/" style="font-size: 20px;">算法</a>
+					</div>
+				</section>
+				
+				
+				
+
+				
+				
+				<section class="switch-part switch-part3">
+				
+					<div id="js-aboutme">计算电磁菜鸟一枚，热爱互联网...</div>
+				</section>
+				
+			</div>
+		</div>
+	</header>				
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"></div>
+  		<h1 class="header-author js-mobile-header hide">MaxwellDemon</h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+				<img lazy-src="https://github.com/aaronlee44/aaronlee44.github.io/blob/master/img/avatar.jpg?raw=true" class="js-avatar">
+			</div>
+			<hgroup>
+			  <h1 class="header-author">MaxwellDemon</h1>
+			</hgroup>
+			
+			<p class="header-subtitle">Hello there！</p>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/">主页</a></li>
+		        
+					<li><a href="/archives">所有文章</a></li>
+		        
+		        <div class="clearfix"></div>
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+				</div>
+			</nav>
+		</header>				
+	</div>
+</nav>
+      <div class="body-wrap"><article id="post-在字符串中找出连续最长的数字串" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2015/07/14/在字符串中找出连续最长的数字串/" class="article-date">
+  	<time datetime="2015-07-14T13:33:27.000Z" itemprop="datePublished">2015-07-14</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      在字符串中找出连续最长的数字串
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C/">C++</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/算法/">算法</a></li></ul>
+	</div>
+
+        
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="问题描述">问题描述</h3><blockquote>
+<p>在一个字符串中找出连续最长的数字串，并把这个串的长度返回；如果存在长度相同的连续数字串，返回最后一个连续数字串；如果没有数字，则返回空字符串（“”）而不是NULL！<br>样例输入：<br>abcd12345ed125ss123058789<br>abcd12345ss54761<br>样例输出：<br>输出123058789，函数返回值9<br>输出54761，函数返回值5</p>
+</blockquote>
+<h3 id="问题分析">问题分析</h3><p>题目本身的难度不大，使用指针对输入字符串进行扫描，控制一个startFlag(开始时设为true)来标记数字串是否开始计数，当指针指向的字符为数字并且startFlag为true时开始计数，然后设置startFlag为flase表示数字串计数已经开始，当遇到字母时就将startFlag设置为true以表示数字串计数的终止。</p>
+<h3 id="代码">代码</h3><figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line">unsigned <span class="keyword">int</span> Continumax(<span class="keyword">char</span>** pOutputstr,  <span class="keyword">char</span>* inputstr)</span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">if</span>(strlen(inputstr)==<span class="number">0</span>||inputstr==<span class="keyword">NULL</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		*pOutputstr=<span class="string">""</span>;</span><br><span class="line">		<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">int</span> <span class="keyword">count</span>=<span class="number">0</span>,maxLen=<span class="number">0</span>;</span><br><span class="line">	<span class="keyword">char</span>* begin,*maxStr;<span class="comment">//begin用于指向数字串起始位置</span></span><br><span class="line">	bool startFlag=<span class="keyword">true</span>;<span class="comment">//标记数字串的开始</span></span><br><span class="line">	<span class="keyword">while</span>(*inputstr!=<span class="string">'\0'</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">if</span>((*inputstr&gt;=<span class="string">'0'</span>)&amp;&amp;(*inputstr&lt;=<span class="string">'9'</span>)&amp;&amp;startFlag)<span class="comment">//为数字且flag为true时开始计数</span></span><br><span class="line">		&#123;</span><br><span class="line">			begin=inputstr;</span><br><span class="line">			startFlag=<span class="keyword">false</span>;<span class="comment">//关闭flag，此时指向数字串区域</span></span><br><span class="line">			<span class="keyword">count</span>++;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">else</span> <span class="keyword">if</span>((*inputstr&gt;=<span class="string">'0'</span>)&amp;&amp;(*inputstr&lt;=<span class="string">'9'</span>))</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="keyword">count</span>++;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">else</span></span><br><span class="line">		&#123;</span><br><span class="line">			<span class="keyword">if</span>(<span class="keyword">count</span>&gt;maxLen)</span><br><span class="line">			&#123;</span><br><span class="line">				maxLen=<span class="keyword">count</span>;</span><br><span class="line">				maxStr=begin;</span><br><span class="line">			&#125;</span><br><span class="line">			<span class="keyword">count</span>=<span class="number">0</span>;</span><br><span class="line">			startFlag=<span class="keyword">true</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		inputstr++;</span><br><span class="line">		<span class="keyword">if</span>((*inputstr==<span class="string">'\0'</span>)&amp;&amp;(<span class="keyword">count</span>&gt;maxLen))</span><br><span class="line">		&#123;</span><br><span class="line">			maxLen=<span class="keyword">count</span>;</span><br><span class="line">			maxStr=begin;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">//存储结果</span></span><br><span class="line">	<span class="keyword">char</span>* res=(<span class="keyword">char</span>*)malloc(sizeof(<span class="keyword">char</span>)*(maxLen+<span class="number">1</span>));</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;maxLen;i++)</span><br><span class="line">	&#123;</span><br><span class="line">		res[i]=maxStr[i];</span><br><span class="line">	&#125;</span><br><span class="line">	res[maxLen]=<span class="string">'\0'</span>;</span><br><span class="line">	*pOutputstr=res;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> maxLen;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+      
+    </div>
+    
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2015/07/14/反转一个整数的各个位上的数字/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption"><</strong>
+      <div class="article-nav-title">
+        
+          反转一个整数的各个位上的数字
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2015/07/14/整数排序/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">整数排序</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+<div class="share">
+	<!-- JiaThis Button BEGIN -->
+	<div class="jiathis_style">
+		<span class="jiathis_txt">分享到：</span>
+		<a class="jiathis_button_tsina"></a>
+		<a class="jiathis_button_cqq"></a>
+		<a class="jiathis_button_douban"></a>
+		<a class="jiathis_button_weixin"></a>
+		<a class="jiathis_button_tumblr"></a>
+		<a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+	</div>
+	<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=1405949716054953" charset="utf-8"></script>
+	<!-- JiaThis Button END -->
+</div>
+
+
+
+<div class="duoshuo">
+	<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="2015/07/14/在字符串中找出连续最长的数字串/" data-title="在字符串中找出连续最长的数字串" data-url="http://yoursite.com/2015/07/14/在字符串中找出连续最长的数字串/"></div>
+	<!-- 多说评论框 end -->
+	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"aaronlee"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<!-- 多说公共JS代码 end -->
+</div>
+
+
+
+</div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2015 MaxwellDemon
+    	</div>
+      	<div class="footer-right">
+      		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
+      	</div>
+    </div>
+  </div>
+</footer>
+    </div>
+    
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css" type="text/css">
+  <script src="/fancybox/jquery.fancybox.pack.js" type="text/javascript"></script>
+
+
+<script src="/js/mobile.js" type="text/javascript"></script>
+<script src="/js/main.js" type="text/javascript"></script>
+
+
+
+
+
+<! -- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';                 
+    }       
+});
+</script>
+
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+
+  </div>
+</body>
+</html>
