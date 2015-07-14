@@ -98,7 +98,7 @@
 				
 				<section class="switch-part switch-part2">
 					<div class="widget tagcloud" id="js-tagcloud">
-						<a href="/tags/算法/" style="font-size: 10px;">算法</a>
+						<a href="/tags/C/" style="font-size: 10px;">C++</a> <a href="/tags/算法/" style="font-size: 20px;">算法</a>
 					</div>
 				</section>
 				
@@ -153,6 +153,66 @@
 	</div>
 </nav>
       <div class="body-wrap">
+  
+    <article id="post-整数排序" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2015/07/14/整数排序/" class="article-date">
+  	<time datetime="2015-07-14T13:26:26.000Z" itemprop="datePublished">2015-07-14</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/07/14/整数排序/">整数排序</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="问题描述">问题描述</h3><blockquote>
+<p>实现输入一组大于等于0的整数，根据从小到大的顺序排序后输出，排序后有连续数时，只输出连续数中最小和最大的两个数。<br>输入: 一组大于等于0的整数，不考虑非法输入，各个整数之间以逗号(“,”)分隔, 输入字符串的总长度小于等于100个字节。<br>输出: 排序后的值，各个整数之间以空格分隔。<br>样例输入: 1,4,3,110,2,90,7<br>样例输出: 1 4 7 90 110 </p>
+</blockquote>
+<h3 id="题目分析">题目分析</h3><p>问题可以分为两步来实现：首先进行字符串处理，去掉字符串中的逗号，提取出数字。然后从小到大进行排序，排序之后对连续数进行分析，只保存其中最大和最小的两个数，然后在数字之间添加空格后输出。</p>
+<blockquote>
+<p>字符串处理部分通过寻找逗号的位置，提取出逗号之间的数字。<br>问题难的地方在于如何处理连续数字，只保存其中最小值和最大值。在对提取出的数字进行排序之后，数字按从小到大排列，由于连续数字之间的差值为1，我就可以通过计算前一个数字和后一个数字之间的差值来判断连续的数字串，然后使用一个continueCount对连续的数字进行计数，当continueCount=2时，我们就知道了出现了需要删除的中间数字，然后我们从容器中删除它们并对continueCount值减1.</p>
+</blockquote>
+<h3 id="代码">代码</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor">#<span class="keyword">include</span>&lt;iostream&gt;</span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">include</span>&lt;string&gt;</span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">include</span>&lt;vector&gt;</span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">include</span>&lt;sstream&gt;</span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">include</span>&lt;algorithm&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="function"><span class="built_in">string</span> <span class="title">IntegerSort</span><span class="params">(<span class="keyword">const</span> <span class="built_in">string</span>&amp; integers)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span><br><span class="line"></span>&#123;</span><br><span class="line">	<span class="built_in">string</span> integers;</span><br><span class="line">	<span class="built_in">cin</span>&gt;&gt;integers;</span><br><span class="line">	<span class="built_in">cout</span>&lt;&lt;IntegerSort(integers)&lt;&lt;endl;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="built_in">string</span> <span class="title">IntegerSort</span><span class="params">(<span class="keyword">const</span> <span class="built_in">string</span>&amp; integers)</span></span><br><span class="line"></span>&#123;</span><br><span class="line">	<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; intVec;</span><br><span class="line">	<span class="keyword">size_t</span> PrePos=<span class="number">0</span>,CurrentPos=<span class="number">0</span>;</span><br><span class="line">	<span class="keyword">while</span>(CurrentPos!=<span class="built_in">string</span>::npos)<span class="comment">//提取数字，删除逗号</span></span><br><span class="line">	&#123;</span><br><span class="line">		CurrentPos=integers.find(<span class="string">','</span>,PrePos);	</span><br><span class="line">		<span class="built_in">string</span> temp=integers.substr(PrePos,CurrentPos-PrePos);</span><br><span class="line">		<span class="built_in">stringstream</span> ss;</span><br><span class="line">		ss&lt;&lt;temp;</span><br><span class="line">		<span class="keyword">int</span> str2int;</span><br><span class="line">		ss&gt;&gt;str2int;</span><br><span class="line">		intVec.push_back(str2int);</span><br><span class="line">		PrePos=CurrentPos+<span class="number">1</span>;		</span><br><span class="line">	&#125;</span><br><span class="line">	sort(intVec.begin(),intVec.end());</span><br><span class="line"></span><br><span class="line">	<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; result;</span><br><span class="line">	<span class="keyword">int</span> continueCount=<span class="number">0</span>;<span class="comment">//记录连续数字出现的次数</span></span><br><span class="line">	result.push_back(intVec[<span class="number">0</span>]);</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">size_t</span> i=<span class="number">1</span>;i&lt;intVec.size();i++)<span class="comment">//检测连续数字，只保存最大最小值</span></span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">int</span> temp=intVec[i]-intVec[i-<span class="number">1</span>];</span><br><span class="line">		<span class="keyword">if</span>(temp==<span class="number">1</span>)</span><br><span class="line">			continueCount++;</span><br><span class="line">		<span class="keyword">else</span></span><br><span class="line">			continueCount=<span class="number">0</span>;</span><br><span class="line">		result.push_back(intVec[i]);</span><br><span class="line">		<span class="keyword">if</span>(continueCount==<span class="number">2</span>)</span><br><span class="line">		&#123;</span><br><span class="line">			result.pop_back();</span><br><span class="line">			result.pop_back();</span><br><span class="line">			result.push_back(intVec[i]);</span><br><span class="line">			continueCount--;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">string</span> res;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">size_t</span> i=<span class="number">0</span>;i&lt;result.size();i++)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">stringstream</span> ss;</span><br><span class="line">		ss&lt;&lt;result[i];</span><br><span class="line">		<span class="built_in">string</span> temp;</span><br><span class="line">		ss&gt;&gt;temp;</span><br><span class="line">		res+=temp+<span class="string">" "</span>;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> res;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C/">C++</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/算法/">算法</a></li></ul>
+	</div>
+
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
   
     <article id="post-大数阶乘" class="article article-type-post" itemscope itemprop="blogPost">
   
