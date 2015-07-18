@@ -190,11 +190,11 @@
 </blockquote>
 <h1 id="两种较多使用的定义">两种较多使用的定义</h1><p> 定义1：$r=a-n*\lfloor\frac{a}{n}\rfloor$，其中$r$表示余数，$a$为被除数，$n$为除数，符号$\lfloor{x}\rfloor$为表示向下取整(<a href="https://en.wikipedia.org/wiki/Floor_and_ceiling_functions" target="_blank" rel="external">floor fuction</a>).</p>
 <blockquote>
-<p>例子：计算$a/n$的时候是向下取整($\lfloor\frac{a}{n}\rfloor$),即取不大于运算结果的最大整数，例如：-4/3=-1.333…对该结果向下取整得到-2（即不大于-1.333…的最大整数），此时$\lfloor\frac{a}{n}\rfloor=-2$，然后$r=a-n<em>\lfloor\frac{a}{n}\rfloor=-4-3</em>(-2)=2$.</p>
+<p>例子：计算$a/n$的时候是向下取整($\lfloor\frac{a}{n}\rfloor$),即取不大于运算结果的最大整数，例如：-4/3=-1.333…对该结果向下取整得到-2（即不大于-1.333…的最大整数），此时$\lfloor\frac{a}{n}\rfloor=-2$，然后 $r=-4-3*(-2)=2$.</p>
 </blockquote>
 <p> 定义2：$r=a-n*\lceil\frac{a}{n}\rceil$，其中$r$表示余数，$a$为被除数，$n$为除数，符号$\lceil{x}\rceil$为表示向上取整(<a href="https://en.wikipedia.org/wiki/Floor_and_ceiling_functions" target="_blank" rel="external">ceiling  fuction</a>).</p>
 <blockquote>
-<p>例子：计算$a/n$的时候是向上取整($\lceil\frac{a}{n}\rceil$)，即取大于运算结果的最小整数，例如：-4/3=-1.333…对该结果向上取整得到-1（即大于-1.333…的最小整数），所以$\lceil\frac{a}{n}\rceil=-1$，从而$r=a-n<em>\lceil\frac{a}{n}\rceil=-4-3</em>(-1)=-1$.</p>
+<p>例子：计算$a/n$的时候是向上取整($\lceil\frac{a}{n}\rceil$)，即取大于运算结果的最小整数，例如：-4/3=-1.333…对该结果向上取整得到-1（即大于-1.333…的最小整数），所以$\lceil\frac{a}{n}\rceil=-1$，从而 $r=-4-3*(-1)=-1$.</p>
 </blockquote>
 <h1 id="C++和Python中的取模">C++和Python中的取模</h1><table>
 <thead>

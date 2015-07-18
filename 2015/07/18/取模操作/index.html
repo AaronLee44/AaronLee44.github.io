@@ -15,7 +15,7 @@
 <meta property="og:description" content="概述“取模(Modulo)”操作总是容易让人觉得定义模糊，当两个操作数符号相同时，不存在问题；但是当两个数符号相异时就会出现差别。使用C++的人会发现python中取模运算不同于C++，同理其他语言也会遇到同样的情况。而这一问题的主要原因在于不同编程语言采用的定义大不相同，有的语言甚至在标准里面没有明确的定义，而是将其交给编译器人员去实现。维基百科上对取模操作的原始定义为：
 
  Given two">
-<meta property="og:updated_time" content="2015-07-18T02:42:40.354Z">
+<meta property="og:updated_time" content="2015-07-18T03:20:07.917Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="取模操作（Modulo operation)">
 <meta name="twitter:description" content="概述“取模(Modulo)”操作总是容易让人觉得定义模糊，当两个操作数符号相同时，不存在问题；但是当两个数符号相异时就会出现差别。使用C++的人会发现python中取模运算不同于C++，同理其他语言也会遇到同样的情况。而这一问题的主要原因在于不同编程语言采用的定义大不相同，有的语言甚至在标准里面没有明确的定义，而是将其交给编译器人员去实现。维基百科上对取模操作的原始定义为：
@@ -206,11 +206,11 @@
 </blockquote>
 <h1 id="两种较多使用的定义">两种较多使用的定义</h1><p> 定义1：$r=a-n*\lfloor\frac{a}{n}\rfloor$，其中$r$表示余数，$a$为被除数，$n$为除数，符号$\lfloor{x}\rfloor$为表示向下取整(<a href="https://en.wikipedia.org/wiki/Floor_and_ceiling_functions" target="_blank" rel="external">floor fuction</a>).</p>
 <blockquote>
-<p>例子：计算$a/n$的时候是向下取整($\lfloor\frac{a}{n}\rfloor$),即取不大于运算结果的最大整数，例如：-4/3=-1.333…对该结果向下取整得到-2（即不大于-1.333…的最大整数），此时$\lfloor\frac{a}{n}\rfloor=-2$，然后$r=a-n<em>\lfloor\frac{a}{n}\rfloor=-4-3</em>(-2)=2$.</p>
+<p>例子：计算$a/n$的时候是向下取整($\lfloor\frac{a}{n}\rfloor$),即取不大于运算结果的最大整数，例如：-4/3=-1.333…对该结果向下取整得到-2（即不大于-1.333…的最大整数），此时$\lfloor\frac{a}{n}\rfloor=-2$，然后 $r=-4-3*(-2)=2$.</p>
 </blockquote>
 <p> 定义2：$r=a-n*\lceil\frac{a}{n}\rceil$，其中$r$表示余数，$a$为被除数，$n$为除数，符号$\lceil{x}\rceil$为表示向上取整(<a href="https://en.wikipedia.org/wiki/Floor_and_ceiling_functions" target="_blank" rel="external">ceiling  fuction</a>).</p>
 <blockquote>
-<p>例子：计算$a/n$的时候是向上取整($\lceil\frac{a}{n}\rceil$)，即取大于运算结果的最小整数，例如：-4/3=-1.333…对该结果向上取整得到-1（即大于-1.333…的最小整数），所以$\lceil\frac{a}{n}\rceil=-1$，从而$r=a-n<em>\lceil\frac{a}{n}\rceil=-4-3</em>(-1)=-1$.</p>
+<p>例子：计算$a/n$的时候是向上取整($\lceil\frac{a}{n}\rceil$)，即取大于运算结果的最小整数，例如：-4/3=-1.333…对该结果向上取整得到-1（即大于-1.333…的最小整数），所以$\lceil\frac{a}{n}\rceil=-1$，从而 $r=-4-3*(-1)=-1$.</p>
 </blockquote>
 <h1 id="C++和Python中的取模">C++和Python中的取模</h1><table>
 <thead>
