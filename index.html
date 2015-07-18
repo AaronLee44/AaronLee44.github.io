@@ -98,7 +98,7 @@
 				
 				<section class="switch-part switch-part2">
 					<div class="widget tagcloud" id="js-tagcloud">
-						<a href="/tags/C/" style="font-size: 10px;">C++</a> <a href="/tags/leetcode/" style="font-size: 10px;">leetcode</a> <a href="/tags/算法/" style="font-size: 20px;">算法</a>
+						<a href="/tags/C/" style="font-size: 15px;">C++</a> <a href="/tags/leetcode/" style="font-size: 15px;">leetcode</a> <a href="/tags/算法/" style="font-size: 20px;">算法</a> <a href="/tags/编程/" style="font-size: 10px;">编程</a>
 					</div>
 				</section>
 				
@@ -153,6 +153,131 @@
 	</div>
 </nav>
       <div class="body-wrap">
+  
+    <article id="post-取模操作" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2015/07/18/取模操作/" class="article-date">
+  	<time datetime="2015-07-18T02:40:55.000Z" itemprop="datePublished">2015-07-18</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/07/18/取模操作/">取模操作（Modulo operation)</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="概述">概述</h1><p>“取模(<a href="https://en.wikipedia.org/wiki/Modulo_operation" target="_blank" rel="external">Modulo</a>)”操作总是容易让人觉得定义模糊，当两个操作数符号相同时，不存在问题；但是当两个数符号相异时就会出现差别。使用C++的人会发现python中取模运算不同于C++，同理其他语言也会遇到同样的情况。而这一问题的主要原因在于不同编程语言采用的定义大不相同，有的语言甚至在标准里面没有明确的定义，而是将其交给编译器人员去实现。<br>维基百科上对取模操作的原始定义为：</p>
+<blockquote>
+<p> Given two positive numbers, a (the dividend) and n (the divisor), a modulo n (abbreviated as a mod n) is the remainder of the <a href="https://en.wikipedia.org/wiki/Euclidean_division" target="_blank" rel="external">Euclidean division</a> of a by n.</p>
+</blockquote>
+<p>原始的定义中两个操作数均为正数，而在计算机领域则会涉及两个数异号的情况，这时候取模操作的实现就取决于编程语言或是其他因素（比如硬件）。<br>维基上的原话为：</p>
+<blockquote>
+<p>In mathematics the result of the modulo operation is the remainder of the Euclidean division. However, other conventions are possible.<br>Computers and calculators have various ways of storing and representing numbers; thus their definition of the modulo operation depends on the programming language and/or the underlying hardware.</p>
+</blockquote>
+<h1 id="两种较多使用的定义">两种较多使用的定义</h1><p> 定义1：$r=a-n*\lfloor\frac{a}{n}\rfloor$，其中$r$表示余数，$a$为被除数，$n$为除数，符号$\lfloor{x}\rfloor$为表示向下取整(<a href="https://en.wikipedia.org/wiki/Floor_and_ceiling_functions" target="_blank" rel="external">floor fuction</a>).</p>
+<blockquote>
+<p>例子：计算$a/n$的时候是向下取整($\lfloor\frac{a}{n}\rfloor$),即取不大于运算结果的最大整数，例如：-4/3=-1.333…对该结果向下取整得到-2（即不大于-1.333…的最大整数），此时$\lfloor\frac{a}{n}\rfloor=-2$，然后$r=a-n<em>\lfloor\frac{a}{n}\rfloor=-4-3</em>(-2)=2$.</p>
+</blockquote>
+<p> 定义2：$r=a-n*\lceil\frac{a}{n}\rceil$，其中$r$表示余数，$a$为被除数，$n$为除数，符号$\lceil{x}\rceil$为表示向上取整(<a href="https://en.wikipedia.org/wiki/Floor_and_ceiling_functions" target="_blank" rel="external">ceiling  fuction</a>).</p>
+<blockquote>
+<p>例子：计算$a/n$的时候是向上取整($\lceil\frac{a}{n}\rceil$)，即取大于运算结果的最小整数，例如：-4/3=-1.333…对该结果向上取整得到-1（即大于-1.333…的最小整数），所以$\lceil\frac{a}{n}\rceil=-1$，从而$r=a-n<em>\lceil\frac{a}{n}\rceil=-4-3</em>(-1)=-1$.</p>
+</blockquote>
+<h1 id="C++和Python中的取模">C++和Python中的取模</h1><table>
+<thead>
+<tr>
+<th style="text-align:center">language</th>
+<th style="text-align:center">operator</th>
+<th style="text-align:center">result has same sign as</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">C (ISO 1990)</td>
+<td style="text-align:center">%</td>
+<td style="text-align:center">Implementation-defined</td>
+</tr>
+<tr>
+<td style="text-align:center">C (ISO 1990)</td>
+<td style="text-align:center">div</td>
+<td style="text-align:center">Dividend</td>
+</tr>
+<tr>
+<td style="text-align:center">C (ISO 1999)</td>
+<td style="text-align:center">%, div</td>
+<td style="text-align:center">Dividend</td>
+</tr>
+<tr>
+<td style="text-align:center">C++ (ISO 1998)</td>
+<td style="text-align:center">%</td>
+<td style="text-align:center">Implementation-defined</td>
+</tr>
+<tr>
+<td style="text-align:center">C++ (ISO 1998)</td>
+<td style="text-align:center">div</td>
+<td style="text-align:center">Dividend</td>
+</tr>
+<tr>
+<td style="text-align:center">C++ (ISO 2011)</td>
+<td style="text-align:center">%, div</td>
+<td style="text-align:center">Dividend</td>
+</tr>
+<tr>
+<td style="text-align:center">Python</td>
+<td style="text-align:center">%</td>
+<td style="text-align:center">Divisor</td>
+</tr>
+<tr>
+<td style="text-align:center">Python</td>
+<td style="text-align:center">math.fmod</td>
+<td style="text-align:center">Dividend</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<ul>
+<li>可以看到早期的C和C++，模运算(%)的结果符号是<a href="http://gcc.gnu.org/onlinedocs/gcc-3.3.6/cpp/Implementation_002ddefined-behavior.html" target="_blank" rel="external">Implementation-defined</a>的，即标准并不规定如何实现，一般将这种实现交给编译器人员。到后期以后就规定了具体的实现方式，即结果符号都和被除数相同。C/C++中的取模操作除了$\%$操作符之外还有<a href="http://www.cplusplus.com/reference/cstdlib/div/" target="_blank" rel="external">div函数</a>。</li>
+<li>对于Python，$\%$的结果和除数相同。另外Python还定义了<a href="https://docs.python.org/2/library/math.html?highlight=math#number-theoretic-and-representation-functions" target="_blank" rel="external">math.fmod</a>方法，其结果的符号与被除数相同。</li>
+</ul>
+</blockquote>
+
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/编程/">编程</a></li></ul>
+	</div>
+
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
   
     <article id="post-Container-With-Most-Water" class="article article-type-post" itemscope itemprop="blogPost">
   
