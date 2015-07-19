@@ -98,7 +98,7 @@
 				
 				<section class="switch-part switch-part2">
 					<div class="widget tagcloud" id="js-tagcloud">
-						<a href="/tags/C/" style="font-size: 15px;">C++</a> <a href="/tags/leetcode/" style="font-size: 15px;">leetcode</a> <a href="/tags/算法/" style="font-size: 20px;">算法</a> <a href="/tags/编程/" style="font-size: 10px;">编程</a>
+						<a href="/tags/C/" style="font-size: 13.33px;">C++</a> <a href="/tags/leetcode/" style="font-size: 16.67px;">leetcode</a> <a href="/tags/算法/" style="font-size: 20px;">算法</a> <a href="/tags/编程/" style="font-size: 10px;">编程</a>
 					</div>
 				</section>
 				
@@ -153,6 +153,63 @@
 	</div>
 </nav>
       <div class="body-wrap">
+  
+    <article id="post-Generate-Parentheses" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2015/07/19/Generate-Parentheses/" class="article-date">
+  	<time datetime="2015-07-19T00:52:17.000Z" itemprop="datePublished">2015-07-19</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/07/19/Generate-Parentheses/">Generate Parentheses</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="题目描述">题目描述</h3><blockquote>
+<p>Given n pairs of parentheses, write a function to generate all combinations of well-formed parentheses.<br>For example, given n = 3, a solution set is:<br>$”((()))”, “(()())”, “(())()”, “()(())”, “()()()”$<br>题目大意：给定$n$对括号，将它们所有可能的组合方式打印出来。</p>
+</blockquote>
+<h3 id="思路">思路</h3><p>在一次正确的打印括号的过程中，我们知道已经打印出来的括号中，左括号的数目一定大于等于右括号的数目，否则括号将不会匹配。所以就可以得知剩余需要打印的括号中，左括号的数目一定小于等于右括号的数目。假设给定$n=k$,则总共需要打印$2k$个括号（$k$个左括号和$k$个右括号），我们用$i$表示打印第$i$个括号这一操作，对于这一状态，我们知道最多有两种选择：打印左括号（如果左括号没有打印完的话）或者打印右括号。只要左括号没有打印完，我们就可以选择打印左括号。但是什么时候可以打印右括号呢？可以发现只要右括号没有打印完并且剩余右括号的数目大于左括号的数目就可以打印。总而言之，只要打印出的括号不会违背括号匹配原则即可。<br>从上面的分析过程可以发现，从第$i$个状态到第$i+1$个状态是一个递归的过程，而递归过程所需要遵守的条件就是上述括号打印所遵守的条件。<br>如下图所示，整个过程是一个二叉树，从根节开始一直往下，红色部分即是不满足括号匹配原则的无效路径。<br><img src="https://github.com/aaronlee44/aaronlee44.github.io/blob/master/img/parentheses.png?raw=true" alt=""></p>
+<h3 id="代码">代码</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt; generateParenthesis(<span class="keyword">int</span> n)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt; res;</span><br><span class="line">    addPair(n,n,<span class="string">""</span>,res);</span><br><span class="line">    <span class="keyword">return</span> res;</span><br><span class="line">&#125;</span><br><span class="line">    </span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">addPair</span><span class="params">(<span class="keyword">int</span> left,<span class="keyword">int</span> right,<span class="built_in">string</span> s,<span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt;&amp; res)</span></span><br><span class="line"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(left==<span class="number">0</span>&amp;&amp;right==<span class="number">0</span>)</span><br><span class="line">        res.push_back(s);</span><br><span class="line">    <span class="keyword">if</span>(left&gt;<span class="number">0</span>)</span><br><span class="line">        addPair(left-<span class="number">1</span>,right,s+<span class="string">'('</span>,res);</span><br><span class="line">    <span class="keyword">if</span>(right&gt;<span class="number">0</span>&amp;&amp;right&gt;left)</span><br><span class="line">        addPair(left,right-<span class="number">1</span>,s+<span class="string">')'</span>,res);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/leetcode/">leetcode</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/算法/">算法</a></li></ul>
+	</div>
+
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
   
     <article id="post-取模操作" class="article article-type-post" itemscope itemprop="blogPost">
   

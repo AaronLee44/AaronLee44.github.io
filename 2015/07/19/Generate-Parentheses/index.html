@@ -3,22 +3,22 @@
 <head>
   <meta charset="utf-8">
   
-  <title>Container With Most Water | 麦克斯韦喵的博客</title>
+  <title>Generate Parentheses | 麦克斯韦喵的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="问题描述
-Given n non-negative integers a1, a2, …, an, where each represents a point at coordinate (i, ai). n vertical lines are drawn such that the two endpoints of line i is at (i, ai) and (i, 0). Find t">
+  <meta name="description" content="题目描述
+Given n pairs of parentheses, write a function to generate all combinations of well-formed parentheses.For example, given n = 3, a solution set is:$”((()))”, “(()())”, “(())()”, “()(())”, “()()()">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Container With Most Water">
-<meta property="og:url" content="http://yoursite.com/2015/07/17/Container-With-Most-Water/index.html">
+<meta property="og:title" content="Generate Parentheses">
+<meta property="og:url" content="http://yoursite.com/2015/07/19/Generate-Parentheses/index.html">
 <meta property="og:site_name" content="麦克斯韦喵的博客">
-<meta property="og:description" content="问题描述
-Given n non-negative integers a1, a2, …, an, where each represents a point at coordinate (i, ai). n vertical lines are drawn such that the two endpoints of line i is at (i, ai) and (i, 0). Find t">
-<meta property="og:image" content="https://github.com/aaronlee44/aaronlee44.github.io/blob/master/img/waterProblem.png?raw=true">
-<meta property="og:updated_time" content="2015-07-17T14:15:11.436Z">
+<meta property="og:description" content="题目描述
+Given n pairs of parentheses, write a function to generate all combinations of well-formed parentheses.For example, given n = 3, a solution set is:$”((()))”, “(()())”, “(())()”, “()(())”, “()()()">
+<meta property="og:image" content="https://github.com/aaronlee44/aaronlee44.github.io/blob/master/img/parentheses.png?raw=true">
+<meta property="og:updated_time" content="2015-07-19T00:53:14.962Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Container With Most Water">
-<meta name="twitter:description" content="问题描述
-Given n non-negative integers a1, a2, …, an, where each represents a point at coordinate (i, ai). n vertical lines are drawn such that the two endpoints of line i is at (i, ai) and (i, 0). Find t">
+<meta name="twitter:title" content="Generate Parentheses">
+<meta name="twitter:description" content="题目描述
+Given n pairs of parentheses, write a function to generate all combinations of well-formed parentheses.For example, given n = 3, a solution set is:$”((()))”, “(()())”, “(())()”, “()(())”, “()()()">
   
     <link rel="alternative" href="/atom.xml" title="麦克斯韦喵的博客" type="application/atom+xml">
   
@@ -157,11 +157,11 @@ Given n non-negative integers a1, a2, …, an, where each represents a point at 
 		</header>				
 	</div>
 </nav>
-      <div class="body-wrap"><article id="post-Container-With-Most-Water" class="article article-type-post" itemscope itemprop="blogPost">
+      <div class="body-wrap"><article id="post-Generate-Parentheses" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2015/07/17/Container-With-Most-Water/" class="article-date">
-  	<time datetime="2015-07-17T13:49:09.000Z" itemprop="datePublished">2015-07-17</time>
+      <a href="/2015/07/19/Generate-Parentheses/" class="article-date">
+  	<time datetime="2015-07-19T00:52:17.000Z" itemprop="datePublished">2015-07-19</time>
 </a>
     </div>
   
@@ -174,7 +174,7 @@ Given n non-negative integers a1, a2, …, an, where each represents a point at 
         
   
     <h1 class="article-title" itemprop="name">
-      Container With Most Water
+      Generate Parentheses
     </h1>
   
 
@@ -194,12 +194,12 @@ Given n non-negative integers a1, a2, …, an, where each represents a point at 
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h3 id="问题描述">问题描述</h3><blockquote>
-<p>Given n non-negative integers a1, a2, …, an, where each represents a point at coordinate (i, ai). n vertical lines are drawn such that the two endpoints of line i is at (i, ai) and (i, 0). Find two lines, which together with x-axis forms a container, such that the container contains the most water.<br>问题大意：如下图所示，横坐标的每个$i$对应一个$a_i$，从中选取两个，使它们之间存储的水的容量最大。</p>
+        <h3 id="题目描述">题目描述</h3><blockquote>
+<p>Given n pairs of parentheses, write a function to generate all combinations of well-formed parentheses.<br>For example, given n = 3, a solution set is:<br>$”((()))”, “(()())”, “(())()”, “()(())”, “()()()”$<br>题目大意：给定$n$对括号，将它们所有可能的组合方式打印出来。</p>
 </blockquote>
-<p><img src="https://github.com/aaronlee44/aaronlee44.github.io/blob/master/img/waterProblem.png?raw=true" alt=""></p>
-<h3 id="分析">分析</h3><p>我们可以知道，最大容量一定由某两个垂线围成（废话！ $(＞﹏＜)$ ），现在的问题是如何寻找到这两条垂线。如果我们使用两个指针，使第一个指针开始时指向头部$a_1$，第二个开始时指向$a_n$，然后让第一个指针从前往后扫描，第二个指针从后往前扫描。<br>现在我们维护$a_i$和$a_j$围成的区域，我们认为它们之间存储的容量最大，而它们所存储的容量是由其中线段最短的一方决定，所以如果某一个线段的长度小于另外一个，那么我们应该去替换掉短的那一方，即让短的一方指针向后步进（对于指针i）或者向前步进（对于指针j）。然后比较指针改变前和改变后容量大小的变化，如果容量变大，则存储这一容量值。<br>这样，当两个指针相遇的时候我们就可以知道，最大值一定存储在之前维护的那个“最大值的变量”之中。</p>
-<h3 id="代码：">代码：</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">maxArea</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; height)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> theMax=<span class="number">0</span>,i=<span class="number">0</span>,j=height.size()-<span class="number">1</span>;</span><br><span class="line">    <span class="keyword">while</span>(i&lt;j)</span><br><span class="line">    &#123;</span><br><span class="line">        theMax=max(theMax,(j-i)*min(height[i],height[j]));</span><br><span class="line">        <span class="keyword">if</span>(height[i]&lt;height[j])</span><br><span class="line">            i++;</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">            j--;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> theMax;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="思路">思路</h3><p>在一次正确的打印括号的过程中，我们知道已经打印出来的括号中，左括号的数目一定大于等于右括号的数目，否则括号将不会匹配。所以就可以得知剩余需要打印的括号中，左括号的数目一定小于等于右括号的数目。假设给定$n=k$,则总共需要打印$2k$个括号（$k$个左括号和$k$个右括号），我们用$i$表示打印第$i$个括号这一操作，对于这一状态，我们知道最多有两种选择：打印左括号（如果左括号没有打印完的话）或者打印右括号。只要左括号没有打印完，我们就可以选择打印左括号。但是什么时候可以打印右括号呢？可以发现只要右括号没有打印完并且剩余右括号的数目大于左括号的数目就可以打印。总而言之，只要打印出的括号不会违背括号匹配原则即可。<br>从上面的分析过程可以发现，从第$i$个状态到第$i+1$个状态是一个递归的过程，而递归过程所需要遵守的条件就是上述括号打印所遵守的条件。<br>如下图所示，整个过程是一个二叉树，从根节开始一直往下，红色部分即是不满足括号匹配原则的无效路径。<br><img src="https://github.com/aaronlee44/aaronlee44.github.io/blob/master/img/parentheses.png?raw=true" alt=""></p>
+<h3 id="代码">代码</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt; generateParenthesis(<span class="keyword">int</span> n)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt; res;</span><br><span class="line">    addPair(n,n,<span class="string">""</span>,res);</span><br><span class="line">    <span class="keyword">return</span> res;</span><br><span class="line">&#125;</span><br><span class="line">    </span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">addPair</span><span class="params">(<span class="keyword">int</span> left,<span class="keyword">int</span> right,<span class="built_in">string</span> s,<span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt;&amp; res)</span></span><br><span class="line"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(left==<span class="number">0</span>&amp;&amp;right==<span class="number">0</span>)</span><br><span class="line">        res.push_back(s);</span><br><span class="line">    <span class="keyword">if</span>(left&gt;<span class="number">0</span>)</span><br><span class="line">        addPair(left-<span class="number">1</span>,right,s+<span class="string">'('</span>,res);</span><br><span class="line">    <span class="keyword">if</span>(right&gt;<span class="number">0</span>&amp;&amp;right&gt;left)</span><br><span class="line">        addPair(left,right-<span class="number">1</span>,s+<span class="string">')'</span>,res);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
       
     </div>
     
@@ -208,18 +208,9 @@ Given n non-negative integers a1, a2, …, an, where each represents a point at 
     
 <nav id="article-nav">
   
-    <a href="/2015/07/18/取模操作/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption"><</strong>
-      <div class="article-nav-title">
-        
-          取模操作（Modulo operation)
-        
-      </div>
-    </a>
   
-  
-    <a href="/2015/07/14/反转一个整数的各个位上的数字/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">反转一个整数的各个位上的数字</div>
+    <a href="/2015/07/18/取模操作/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">取模操作（Modulo operation)</div>
       <strong class="article-nav-caption">></strong>
     </a>
   
@@ -248,7 +239,7 @@ Given n non-negative integers a1, a2, …, an, where each represents a point at 
 
 <div class="duoshuo">
 	<!-- 多说评论框 start -->
-	<div class="ds-thread" data-thread-key="2015/07/17/Container-With-Most-Water/" data-title="Container With Most Water" data-url="http://yoursite.com/2015/07/17/Container-With-Most-Water/"></div>
+	<div class="ds-thread" data-thread-key="2015/07/19/Generate-Parentheses/" data-title="Generate Parentheses" data-url="http://yoursite.com/2015/07/19/Generate-Parentheses/"></div>
 	<!-- 多说评论框 end -->
 	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
 	<script type="text/javascript">
