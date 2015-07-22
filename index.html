@@ -98,7 +98,7 @@
 				
 				<section class="switch-part switch-part2">
 					<div class="widget tagcloud" id="js-tagcloud">
-						<a href="/tags/C/" style="font-size: 13.33px;">C++</a> <a href="/tags/leetcode/" style="font-size: 16.67px;">leetcode</a> <a href="/tags/算法/" style="font-size: 20px;">算法</a> <a href="/tags/编程/" style="font-size: 10px;">编程</a>
+						<a href="/tags/C/" style="font-size: 13.33px;">C++</a> <a href="/tags/leetcode/" style="font-size: 16.67px;">leetcode</a> <a href="/tags/栈/" style="font-size: 10px;">栈</a> <a href="/tags/算法/" style="font-size: 20px;">算法</a> <a href="/tags/编程/" style="font-size: 10px;">编程</a>
 					</div>
 				</section>
 				
@@ -153,6 +153,63 @@
 	</div>
 </nav>
       <div class="body-wrap">
+  
+    <article id="post-火车进站" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2015/07/21/火车进站/" class="article-date">
+  	<time datetime="2015-07-21T00:58:05.000Z" itemprop="datePublished">2015-07-21</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/07/21/火车进站/">火车进站</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="题目描述">题目描述</h3><blockquote>
+<p>给定一个正整数N代表火车数量，$0&lt;N&lt;10$，接下来输入火车入站的序列，一共$N$辆火车，每辆火车以数字$1-9$编号。要求以字典序排序输出火车出站的序列号。<br>样例输入:<br>3<br>1 2 3<br>样例输出:<br>1 2 3<br>1 3 2<br>2 1 3<br>2 3 1<br>3 2 1 </p>
+</blockquote>
+<h3 id="分析">分析</h3><p>这个题目和<a href="http://maxwelldemon.me/2015/07/19/Generate-Parentheses/" target="_blank" rel="external">生成括号</a>的解题思路相同。输入为$N$时，需要入站和出站的次数均为$N$。对于整个过程的任意一个状态$i$，该状态之前入站的次数一定大于等于出站的次数（因为每一次出站均对应一次入站，但是每一次入站并不一定会进行出站操作）。所以对于第$i$个状态是入站还是出站取决于之前出入站的次数，假设第$i$个状态之前进行了$m$次入站和$k$次出站，则还需要入站的次数变为$N-m$，还需要出站的次数变为$N-k$，那么第$i$个状态什么时候可以进行入站操作？什么时候可以进行出站操作？利用条件“状态$i$之前入站的次数一定大于等于出站的次数”即可得出$m \ge k$，所以$N-m \le N-k$，即第$i$个状态需要遵守的条件变为“还需要入站的操作次数一定小于等于还需要出站的操作次数”。现在我们就可以得出状态$i$时，进行入站操作的条件为：还需要进行入站的次数大于零；进行出站操作的条件为：还需要进行出站的次数大于零并且还需要出站的次数大于等于还需要入站的次数（即满足上面得到的条件）。<br>我们使用一个队列来存储输入的序列，不同于“生成括号”问题的是，我们在第$i$个状态进行了一种选择之后（出站或入站），问题进入递归（如果用二叉树表示，问题就会沿着树的一个分支走下去），比如在这个状态的“入站”条件满足，我们进行了入站操作（选择一个入站的分支走下去），输入队列头部元素被压栈，但是当这次“入站操作”进行完毕后，我们发现“出站”的条件也满足，也可以进行出站操作，但是此时由于我们一直使用的是同一个输入队列，这个队列的状态在刚才入站的时候已经被改变，所以如果我们想在这一步进行出站操作的话就必须在上一步入站递归完了之后将输入队列恢复原样。同理，出站之后也将队列恢复。下述代码中使用了双端队列deque，因为需要在头部进行插入操作，另外，为了按照字典序输出，对存储满足条件的队列的数组进行sort就可以按照字典序输出。</p>
+<h3 id="一点小总结">一点小总结</h3><p>“生成括号”和“火车进出站”这两个问题的关键都在于寻找某种看待问题的角度，而这种角度就是观察问题状态变化的过程，对于火车问题的第$i$个状态到第$i+1$个状态的过度，只需要让它满足“还需要入站的操作次数一定小于等于还需要出站的操作次数”；对于括号问题的第$i$个状态到第$i+1$个状态的过度，只需要满足“剩余需要打印的括号中，左括号的数目一定小于等于右括号的数目”。所以我们只需要观察问题，寻找到状态转移过程所需遵循的条件即可使问题得到解决。</p>
+<h3 id="代码">代码</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor">#<span class="keyword">include</span>&lt;iostream&gt;</span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">include</span>&lt;string&gt;</span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">include</span>&lt;algorithm&gt;<span class="comment">//sort()</span></span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">include</span>&lt;sstream&gt;</span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">include</span>&lt;stack&gt;</span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">include</span>&lt;deque&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">TrainInOut</span><span class="params">(<span class="keyword">int</span> N,<span class="keyword">const</span> <span class="built_in">string</span>&amp; order)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">InOutStack</span><span class="params">(<span class="keyword">int</span> NumNeedIn,<span class="keyword">int</span> NumNeedOut,<span class="built_in">deque</span>&lt;<span class="keyword">int</span>&gt; &amp;q,<span class="built_in">stack</span>&lt;<span class="keyword">int</span>&gt; &amp;stk,<span class="built_in">deque</span>&lt;<span class="keyword">int</span>&gt; &amp;seqIn,<span class="built_in">vector</span>&lt;<span class="built_in">deque</span>&lt;<span class="keyword">int</span>&gt;&gt; &amp;res)</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span><br><span class="line"></span>&#123;</span><br><span class="line">	<span class="built_in">string</span> order;</span><br><span class="line">	<span class="keyword">int</span> N;</span><br><span class="line">	<span class="built_in">cin</span>&gt;&gt;N;</span><br><span class="line">	<span class="built_in">cin</span>.get();<span class="comment">//删除流中换行符</span></span><br><span class="line">	getline(<span class="built_in">cin</span>,order);</span><br><span class="line">	TrainInOut(N,order);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">TrainInOut</span><span class="params">(<span class="keyword">int</span> N,<span class="keyword">const</span> <span class="built_in">string</span>&amp; order)</span></span><br><span class="line"></span>&#123;</span><br><span class="line">	<span class="built_in">deque</span>&lt;<span class="keyword">int</span>&gt; q,seqIn;</span><br><span class="line">	<span class="built_in">stack</span>&lt;<span class="keyword">int</span>&gt; stk;</span><br><span class="line">	<span class="function"><span class="built_in">stringstream</span> <span class="title">ss</span><span class="params">(order)</span></span>;</span><br><span class="line">	<span class="keyword">int</span> temp;</span><br><span class="line">	<span class="keyword">while</span> (ss&gt;&gt;temp)</span><br><span class="line">	&#123;</span><br><span class="line">		seqIn.push_back(temp);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="built_in">vector</span>&lt;<span class="built_in">deque</span>&lt;<span class="keyword">int</span>&gt;&gt; res;</span><br><span class="line">	InOutStack(N,N,q,stk,seqIn,res);</span><br><span class="line">	<span class="built_in">cout</span>&lt;&lt;<span class="string">"result: "</span>&lt;&lt;endl;</span><br><span class="line">	sort(res.begin(),res.end());<span class="comment">//使之按字典序排列</span></span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">auto</span> &amp;item1:res)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">auto</span> &amp;item2:item1)</span><br><span class="line">			<span class="built_in">cout</span>&lt;&lt;item2&lt;&lt;<span class="string">" "</span>;</span><br><span class="line">		<span class="built_in">cout</span>&lt;&lt;endl;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">InOutStack</span><span class="params">(<span class="keyword">int</span> NumNeedIn,<span class="keyword">int</span> NumNeedOut,<span class="built_in">deque</span>&lt;<span class="keyword">int</span>&gt; &amp;q,<span class="built_in">stack</span>&lt;<span class="keyword">int</span>&gt; &amp;stk,<span class="built_in">deque</span>&lt;<span class="keyword">int</span>&gt; &amp;seqIn,<span class="built_in">vector</span>&lt;<span class="built_in">deque</span>&lt;<span class="keyword">int</span>&gt;&gt; &amp;res)</span></span><br><span class="line"></span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(NumNeedIn==<span class="number">0</span>&amp;&amp;NumNeedOut==<span class="number">0</span>)</span><br><span class="line">		res.push_back(q);</span><br><span class="line">	<span class="keyword">if</span>(NumNeedIn&gt;<span class="number">0</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		stk.push(seqIn.front());</span><br><span class="line">		seqIn.pop_front();</span><br><span class="line">		InOutStack(NumNeedIn-<span class="number">1</span>,NumNeedOut,q,stk,seqIn,res);</span><br><span class="line">		seqIn.push_front(stk.top());</span><br><span class="line">		stk.pop();</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">if</span>(NumNeedOut&gt;<span class="number">0</span>&amp;&amp;NumNeedOut&gt;NumNeedIn)</span><br><span class="line">	&#123;</span><br><span class="line">		q.push_back(stk.top());</span><br><span class="line">		stk.pop();</span><br><span class="line">		InOutStack(NumNeedIn,NumNeedOut-<span class="number">1</span>,q,stk,seqIn,res);</span><br><span class="line">		stk.push(q.back());</span><br><span class="line">		q.pop_back();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/栈/">栈</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/算法/">算法</a></li></ul>
+	</div>
+
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
   
     <article id="post-Generate-Parentheses" class="article article-type-post" itemscope itemprop="blogPost">
   
