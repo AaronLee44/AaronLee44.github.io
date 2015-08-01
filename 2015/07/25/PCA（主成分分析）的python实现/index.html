@@ -15,7 +15,7 @@ PCA主要步骤
 <meta property="og:description" content="简介我们平时遇到的训练数据集可能会具有较多的特征，以及经常含有噪声。较多的特征之间会呈现很强的相关性，会使数据变得冗余。这时候我们可以使用PCA来对数据进行降维并且去除噪声。PCA是为了将N维数据映射到K维，其中这个“K维”空间的基是“使映射之后，数据集在每个基上的投影的方差最大（最大方差理论的解释）”。PCA的详细解释和推导过程，可以看这个博客以及这里。
 PCA主要步骤
 求每个特征的均值，然后对">
-<meta property="og:updated_time" content="2015-07-31T14:54:59.631Z">
+<meta property="og:updated_time" content="2015-08-01T07:45:20.281Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="PCA（主成分分析）的python实现">
 <meta name="twitter:description" content="简介我们平时遇到的训练数据集可能会具有较多的特征，以及经常含有噪声。较多的特征之间会呈现很强的相关性，会使数据变得冗余。这时候我们可以使用PCA来对数据进行降维并且去除噪声。PCA是为了将N维数据映射到K维，其中这个“K维”空间的基是“使映射之后，数据集在每个基上的投影的方差最大（最大方差理论的解释）”。PCA的详细解释和推导过程，可以看这个博客以及这里。
@@ -198,7 +198,7 @@ PCA主要步骤
       
         <h2 id="简介">简介</h2><p>我们平时遇到的训练数据集可能会具有较多的特征，以及经常含有噪声。较多的特征之间会呈现很强的相关性，会使数据变得冗余。这时候我们可以使用PCA来对数据进行降维并且去除噪声。PCA是为了将N维数据映射到K维，其中这个“K维”空间的基是“使映射之后，数据集在每个基上的投影的方差最大（最大方差理论的解释）”。<br>PCA的详细解释和推导过程，可以看<a href="http://www.cnblogs.com/jerrylead/archive/2011/04/18/2020209.html" target="_blank" rel="external">这个博客</a>以及<a href="http://deeplearning.stanford.edu/wiki/index.php/%E4%B8%BB%E6%88%90%E5%88%86%E5%88%86%E6%9E%90" target="_blank" rel="external">这里</a>。</p>
 <h2 id="PCA主要步骤">PCA主要步骤</h2><ol>
-<li>求每个特征的均值，然后对于每个样本，减去对应特征上的均值。（即在高维空间中将数据平移到它的质心）。</li>
+<li>求每个特征的均值，然后对于每个样本，减去对应特征上的均值。（即在高维空间中将数据平移到它的“中心”）。</li>
 <li>求特征的协方差矩阵。</li>
 <li>求协方差矩阵的特征值和归一化特征向量。</li>
 <li>对特征值从大到小排序，选取最大的K个特征值对应的特征向量，组成N*K阶矩阵。</li>
