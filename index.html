@@ -102,7 +102,7 @@
 				
 				<section class="switch-part switch-part2">
 					<div class="widget tagcloud" id="js-tagcloud">
-						<a href="/tags/C/" style="font-size: 13.33px;">C++</a> <a href="/tags/PCA/" style="font-size: 10px;">PCA</a> <a href="/tags/leetcode/" style="font-size: 16.67px;">leetcode</a> <a href="/tags/python/" style="font-size: 10px;">python</a> <a href="/tags/机器学习/" style="font-size: 10px;">机器学习</a> <a href="/tags/栈/" style="font-size: 10px;">栈</a> <a href="/tags/算法/" style="font-size: 20px;">算法</a> <a href="/tags/编程/" style="font-size: 10px;">编程</a>
+						<a href="/tags/C/" style="font-size: 13.33px;">C++</a> <a href="/tags/PCA/" style="font-size: 13.33px;">PCA</a> <a href="/tags/leetcode/" style="font-size: 16.67px;">leetcode</a> <a href="/tags/python/" style="font-size: 13.33px;">python</a> <a href="/tags/机器学习/" style="font-size: 13.33px;">机器学习</a> <a href="/tags/栈/" style="font-size: 10px;">栈</a> <a href="/tags/算法/" style="font-size: 20px;">算法</a> <a href="/tags/编程/" style="font-size: 10px;">编程</a>
 					</div>
 				</section>
 				
@@ -161,6 +161,67 @@
 	</div>
 </nav>
       <div class="body-wrap">
+  
+    <article id="post-PCA选择主成分个数" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2015/08/03/PCA选择主成分个数/" class="article-date">
+  	<time datetime="2015-08-03T13:46:52.000Z" itemprop="datePublished">2015-08-03</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/08/03/PCA选择主成分个数/">PCA选择主成分个数</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>采用主成分分析进行降维的时候，我们可能不知道应该选择多少的主成分。一般而言，我们采用保留多少累积方差百分比的方式来确定保留主成分的多少。<br>累积方差百分比定义如下：<br>对于协方差矩阵$\Sigma$，将它的特征值从大到小排序 $\lambda_1,\lambda_2,\lambda_3…\lambda_n $ ，如果我们保留前$k$部分的特征值，则累积的方差百分比为： </p>
+<p>$$ \frac{\sum<em>{j=1}^{k}\lambda_j}{\sum</em>{j=1}^{n}\lambda_j} $$ </p>
+<p>所以我们可以这样确定$k$的大小，对于某个方差百分比var_percentage，使其满足：  </p>
+<p>$$ \frac{\sum<em>{j=1}^{k} \lambda_j}{\sum</em>{j=1}^{n} \lambda_j}\ge var_percentage $$</p>
+<p>即通过选取最小的$k$，使其满足上式。</p>
+<blockquote>
+<p>又有一个问题出现了，有时候没有确定var_percentage，需要我们自己确定应该保留多少百分比的方差，应该怎么做呢？</p>
+</blockquote>
+<p>一种比较直观的选择方法是绘制出累积方差百分比的曲线，以及协方差矩阵特征值从大到小变化的曲线。然后观察”<strong>特征值从大到小变化的曲线</strong>“，选择曲线由陡峭变的平缓的临界点，参考自<a href="http://www.stat.cmu.edu/~cshalizi/350/lectures/13/lecture-13.pdf" target="_blank" rel="external">这里</a>。<br>示例如下，为某数据集协方差矩阵累积方差百分比的曲线和排序后的特征值曲线：<br><img src="https://github.com/aaronlee44/aaronlee44.github.io/blob/master/img/pca_fig1.png?raw=true" alt=""><br><img src="https://github.com/aaronlee44/aaronlee44.github.io/blob/master/img/pca_fig2.png?raw=true" alt=""><br>从第一个累积百分比图中我们可以看到在前60到100之间，曲线开始变得平缓，但是这一曲线只是让我们参考保留多少百分比方差。<a href="http://www.stat.cmu.edu/~cshalizi/350/lectures/13/lecture-13.pdf" target="_blank" rel="external">这篇文章</a>让我们通过第二个”<strong>特征值从大到小排序的图形</strong>“来确定选取多少数目的特征值。我们可以看到，第40个特征值处曲线开始变的平缓，所以我们可以选择前40个主成分。</p>
+<h3 id="Python代码">Python代码</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#coding=utf-8</span></span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"></span><br><span class="line"><span class="keyword">with</span> open(<span class="string">"train.csv"</span>) <span class="keyword">as</span> trainFile:</span><br><span class="line">	<span class="keyword">print</span> <span class="string">"read train data!"</span></span><br><span class="line">	trainFile.readline()</span><br><span class="line">	trainData = []</span><br><span class="line">	<span class="keyword">for</span> line <span class="keyword">in</span> trainFile.readlines():</span><br><span class="line">		data = line.rstrip().split(<span class="string">","</span>)</span><br><span class="line">		trainData.append(map(int,data))</span><br><span class="line">	trainData = np.array(trainData)	</span><br><span class="line"><span class="comment">#计算均值</span></span><br><span class="line"><span class="keyword">print</span> <span class="string">"calc mean!"</span></span><br><span class="line">mean = np.mean(trainData,axis=<span class="number">0</span>) <span class="comment">#对每一个特征(列)求均值</span></span><br><span class="line">adjustMat = trainData-mean <span class="comment">#对每一特征的数值减去其均值</span></span><br><span class="line"><span class="comment">#协方差矩阵</span></span><br><span class="line"><span class="keyword">print</span> <span class="string">"calc covMat"</span></span><br><span class="line">covMat = np.cov(adjustMat,rowvar=<span class="number">0</span>) <span class="comment">#由于每一列视为一个特征，所以设置rowvar=0</span></span><br><span class="line">covEigenVal,covEigenVec = np.linalg.eig(covMat) <span class="comment">#eig返回特征值和特征向量，其中特征向量已归一化</span></span><br><span class="line"><span class="comment">#特征值按照从大到小的顺序排序，选择其中最大的k个</span></span><br><span class="line">orderedEigVal = np.sort(covEigenVal)	<span class="comment">#对covEigenVal排序</span></span><br><span class="line">orderedEigVal = orderedEigVal[::-<span class="number">1</span>]</span><br><span class="line">sumEigVal = np.sum(covEigenVal)</span><br><span class="line"></span><br><span class="line">acumEigValRatio = []</span><br><span class="line">tempSum = <span class="number">0.0</span></span><br><span class="line"><span class="keyword">for</span> val <span class="keyword">in</span> orderedEigVal:</span><br><span class="line">	tempSum += val</span><br><span class="line">	acumEigValRatio.append(abs(tempSum/sumEigVal))</span><br><span class="line"></span><br><span class="line"><span class="keyword">with</span> open(<span class="string">"acumEigValRatio.txt"</span>,<span class="string">"w"</span>) <span class="keyword">as</span> writeFile:</span><br><span class="line">	<span class="keyword">for</span> item <span class="keyword">in</span> acumEigValRatio:</span><br><span class="line">		writeFile.write(str(item)+<span class="string">"\n"</span>)</span><br><span class="line">	</span><br><span class="line">x = range(<span class="number">0</span>,len(covEigenVal))</span><br><span class="line">plt.figure(<span class="number">1</span>)</span><br><span class="line">plt.plot(x,acumEigValRatio)</span><br><span class="line">plt.xlabel(<span class="string">"n_components"</span>)</span><br><span class="line">plt.ylabel(<span class="string">"variance_ratio"</span>)</span><br><span class="line">plt.grid()	</span><br><span class="line">plt.show()</span><br><span class="line"></span><br><span class="line">plt.figure(<span class="number">2</span>)</span><br><span class="line">plt.plot(orderedEigVal)</span><br><span class="line">plt.title(<span class="string">"EigenValRanking_InDescentOrder"</span>)</span><br><span class="line">plt.xlabel(<span class="string">"NO.i EigenVal"</span>)</span><br><span class="line">plt.ylabel(<span class="string">"EigenVal"</span>)</span><br><span class="line">plt.grid()	</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/PCA/">PCA</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/">python</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/机器学习/">机器学习</a></li></ul>
+	</div>
+
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
   
     <article id="post-PCA（主成分分析）的python实现" class="article article-type-post" itemscope itemprop="blogPost">
   
@@ -859,66 +920,10 @@
 
 
   
-    <article id="post-N个台阶问题" class="article article-type-post" itemscope itemprop="blogPost">
   
-    <div class="article-meta">
-      <a href="/2015/07/07/N个台阶问题/" class="article-date">
-  	<time datetime="2015-07-07T13:21:11.000Z" itemprop="datePublished">2015-07-07</time>
-</a>
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2015/07/07/N个台阶问题/">N个台阶问题</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="题目描述">题目描述</h1><p>有一个具有N个台阶的阶梯，一次可以上一阶或是两阶，问有多少中走法。</p>
-<h1 id="题目分析">题目分析</h1><h3 id="方法1：">方法1：</h3><p>这道题最简单的解决思路是采用递归的思想，从最后一步开始分析，先不去考虑先前的走法，对于最后一步可能的走法只有两种：只需走一阶到达第N个台阶或需要走两阶到达第N个台阶。然后分别考虑最后一步走一阶的情况和走两阶的情况，问题变为一个递归问题。<br>对于走一阶的情况：变为求前面N-1个台阶如何走；同样对于走两阶的情况：问题变为求前面N-2个台阶如何走的问题。<br>使用数学描述：假设对于N阶的台阶有f(N)种走法，如果最后一步走一阶，则剩余的N-1阶的走法数目为f(N-1);类似的，如果最后一步走两阶，则剩余N-2个台阶走法的数目为f(N-2)。所以N个台阶总共的走法：f(N)=f(N-1)+f(N-2)。由此得到了一个递归定义的公式，现在只需要考虑递归结束条件即可解决问题。递归计算到f(2)+f(1)时结束，由题意可以得知f(1)=1,f(2)=2。<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">recursionMethod</span><span class="params">(<span class="keyword">int</span> N)</span></span><br><span class="line"></span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(N&lt;=<span class="number">0</span>)</span><br><span class="line">		<span class="built_in">cout</span>&lt;&lt;<span class="string">"N should be bigger than 0"</span>&lt;&lt;endl;</span><br><span class="line">	<span class="keyword">if</span>(N==<span class="number">1</span>||N==<span class="number">2</span>)</span><br><span class="line">		<span class="keyword">return</span> N;</span><br><span class="line">	<span class="keyword">else</span></span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">return</span> recursionMethod(N-<span class="number">1</span>)+recursionMethod(N-<span class="number">2</span>);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<blockquote>
-<p>问题：上述代码采用了递归的方法求解，但是由于递归本身时间和空间消耗都比较大，所以程序并不是很高效。<br>观察公式f(N)=f(N-1)+f(N-2)可以发现，要计算N个台阶的走法只需要知道N-1和N-2个台阶的走法，所以实际上只需要存储这两个状态的信息即可，因此我们可以尝试将递归程序改写为迭代的方式。如下所示，时间复杂度变为了O(N)。</p>
-</blockquote>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">iter</span><span class="params">(<span class="keyword">int</span> N)</span></span><br><span class="line"></span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(N==<span class="number">1</span>||N==<span class="number">2</span>)</span><br><span class="line">		<span class="keyword">return</span> N;</span><br><span class="line">	<span class="keyword">int</span> fn1=<span class="number">2</span>,fn2=<span class="number">1</span>;<span class="comment">//分别表示f(n-1)和f(N-2)</span></span><br><span class="line">	<span class="keyword">int</span> result=<span class="number">0</span>;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">3</span>;i&lt;=N;i++)</span><br><span class="line">	&#123;</span><br><span class="line">		result=fn1+fn2;</span><br><span class="line">		fn2=fn1;</span><br><span class="line">		fn1=result;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> result;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="方法2：">方法2：</h3><p>该问题还可以采用数学的方法直接解决，假设一次走一阶的共有$x$次，走两阶的共有$y$次，则可以得到$x+2y=N$，我们可以对$x$从0到N进行遍历，将每一个$x$代入前面的等式求出$y=\frac{N-x}{2}$，如果$y$是整数，则保存这一对$(x,y)$。然后考虑对于每一对$(x,y)$它们的排列问题即可求出这一对$(x,y)$的所有走法，然后将所有满足条件的$(x,y)$的走法相加就可以得到总的走法数目。<br>对于某一对$(x,y)$，求其所有排列的数目是一个捆绑插空问题，即一次走两步（$y$）的情况要看做整体（捆绑在一起），所以总共有$x+y=N-2y+y=N-y$个空，即需要从$N-y$个空中选出$x$个插入就可以得到这一对$(x,y)$的所有走法的组合$C_{N-y}^y$。<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//计算组合</span></span><br><span class="line"><span class="function"><span class="keyword">int</span>	<span class="title">combination</span><span class="params">(<span class="keyword">int</span> M,<span class="keyword">int</span> N)</span></span><br><span class="line"></span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(M==N||N==<span class="number">0</span>)</span><br><span class="line">		<span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">	<span class="keyword">else</span></span><br><span class="line">		<span class="keyword">return</span> combination(M-<span class="number">1</span>,N)+combination(M-<span class="number">1</span>,N-<span class="number">1</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//求解总的走法</span></span><br><span class="line"><span class="keyword">struct</span> Pair</span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">int</span> x,y;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">mathmaticalWay</span><span class="params">(<span class="keyword">int</span> N)</span></span><br><span class="line"></span>&#123;</span><br><span class="line">	<span class="built_in">vector</span>&lt;Pair&gt; savePair;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> x=<span class="number">0</span>;x&lt;=N;x++)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">if</span>((N-x)%<span class="number">2</span>==<span class="number">0</span>)</span><br><span class="line">		&#123;</span><br><span class="line">			Pair ok;</span><br><span class="line">			ok.x=x;</span><br><span class="line">			ok.y=(N-x)/<span class="number">2</span>;</span><br><span class="line">			savePair.push_back(ok);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">int</span> sum=<span class="number">0</span>;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">auto</span> eachPair:savePair)</span><br><span class="line">	&#123;</span><br><span class="line">		sum+=combination(N-eachPair.y,eachPair.x);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> sum;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>两种方法结果：<br><img src="https://github.com/aaronlee44/aaronlee44.github.io/blob/master/img/nsteps.png?raw=true" alt=""></p>
-
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-	<div class="article-tag tagcloud">
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/算法/">算法</a></li></ul>
-	</div>
-
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-  
+    <nav id="page-nav">
+      <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
+    </nav>
   
 </div>
       <footer id="footer">
