@@ -2,6 +2,11 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://yoursite.com/email.html</loc>
+    <lastmod>2015-08-22T09:21:42.567Z</lastmod>
+  </url>
+  
+  <url>
     <loc>http://yoursite.com/google01d993154c8652b4.html</loc>
     <lastmod>2015-08-22T07:57:35.117Z</lastmod>
   </url>
