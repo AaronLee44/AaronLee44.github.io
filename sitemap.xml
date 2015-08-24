@@ -2,6 +2,11 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://yoursite.com/2015/07/17/Container-With-Most-Water/</loc>
+    <lastmod>2015-08-24T14:20:07.614Z</lastmod>
+  </url>
+  
+  <url>
     <loc>http://yoursite.com/email.html</loc>
     <lastmod>2015-08-22T09:21:42.567Z</lastmod>
   </url>
@@ -49,11 +54,6 @@
   <url>
     <loc>http://yoursite.com/2015/07/07/N%E4%B8%AA%E5%8F%B0%E9%98%B6%E9%97%AE%E9%A2%98/</loc>
     <lastmod>2015-07-18T01:16:45.660Z</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://yoursite.com/2015/07/17/Container-With-Most-Water/</loc>
-    <lastmod>2015-07-17T14:15:11.436Z</lastmod>
   </url>
   
   <url>
