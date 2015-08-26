@@ -191,7 +191,7 @@
         <p>采用主成分分析进行降维的时候，我们可能不知道应该选择多少的主成分。一般而言，我们采用保留多少累积方差百分比的方式来确定保留主成分的多少。<br>累积方差百分比定义如下：<br>对于协方差矩阵$\Sigma$，将它的特征值从大到小排序 $\lambda_1, \lambda_2, \lambda_3…\lambda_n $ ，如果我们保留前$k$部分的特征值，则累积的方差百分比为：  </p>
 <p>$$\frac{\sum_{j=1}^{k}\lambda_j}{\sum_{j=1}^{n}\lambda_j}$$</p>
 <p>所以我们可以这样确定$k$的大小，对于某个方差百分比var_percentage，使其满足：</p>
-<p>$$\frac{\sum_{j=1}^{k} \lambda_j}{\sum_{j=1}^{n} \lambda_j}\ge var_percentage$$</p>
+<p>$$\frac{\sum_{j=1}^{k} \lambda_j}{\sum_{j=1}^{n} \lambda_j}\ge var\_percentage$$</p>
 <p>即通过选取最小的$k$，使其满足上式。</p>
 <blockquote>
 <p>又有一个问题出现了，有时候没有确定var_percentage，需要我们自己确定应该保留多少百分比的方差，应该怎么做呢？</p>
